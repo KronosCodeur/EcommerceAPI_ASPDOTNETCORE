@@ -32,4 +32,28 @@ public class AuthController: ControllerBase
         }
         return StatusCode(201, "You  are successfully registered");
     }
+
+    [HttpPost("login")]
+    public async Task<IActionResult> Login(string username, string password)
+
+    {
+        var user = await _userService.Login(username);
+        if (user is null)
+        {
+            return StatusCode(404, "Invalid username.");
+        }
+        if (!BCrypt.Net.BCrypt.Verify(password, user.Password))
+        {
+            return StatusCode(404, "Invalid password.");
+        }
+
+        var data = new Dictionary<string, string>()
+        {
+            {"id",user.ID.ToString()},
+            {"username",username},
+            {"address",user.Address},
+            {"email",user.Email},
+        };
+        return Ok(data);
+    }
 }
