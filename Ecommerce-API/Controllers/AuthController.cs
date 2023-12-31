@@ -47,12 +47,14 @@ public class AuthController: ControllerBase
             return StatusCode(404, "Invalid password.");
         }
 
+        user.Token = _userService.CreateUserToken(user);
         var data = new Dictionary<string, string>()
         {
             {"id",user.ID.ToString()},
             {"username",username},
             {"address",user.Address},
             {"email",user.Email},
+            {"token",user.Token},
         };
         return Ok(data);
     }

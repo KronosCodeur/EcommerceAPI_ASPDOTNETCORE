@@ -10,4 +10,5 @@ public class User
     public string Password { get; set; } = String.Empty;
     public string Address { get; set; }
     public string Email { get; set; }
+    public string? Token { get; set; }
 }
