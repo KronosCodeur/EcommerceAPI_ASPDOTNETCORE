@@ -11,23 +11,23 @@ namespace Ecommerce_API.Services;
 
 public class UserService : IUserRepository
 {
-    private readonly UserDbContext _userDbContext;
+    private readonly DatabaseContext _databaseContext;
 
-    public UserService(UserDbContext userDbContext)
+    public UserService(DatabaseContext databaseContext)
     {
-        _userDbContext = userDbContext;
+        _databaseContext = databaseContext;
     }
 
     public async Task<bool> Register(User user)
     {
-        _userDbContext.Users.Add(user);
-        await _userDbContext.SaveChangesAsync();
+        _databaseContext.Users.Add(user);
+        await _databaseContext.SaveChangesAsync();
         return true;
     }
 
     public async Task<User?> Login(string username)
     {
-        var user = await _userDbContext.Users.FirstOrDefaultAsync(u=>u.Username==username);
+        var user = await _databaseContext.Users.FirstOrDefaultAsync(u=>u.Username==username);
         return user;
     }
     public string CreateUserToken(User user)

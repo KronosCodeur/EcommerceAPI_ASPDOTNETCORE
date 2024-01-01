@@ -12,14 +12,14 @@ namespace Ecommerce_API.Controllers;
 public class AuthController: ControllerBase
 {
     private readonly UserService _userService;
-    private readonly UserDbContext _userDbContext;
+    private readonly DatabaseContext _databaseContext;
     private readonly IMapper _mapper;
 
-    public AuthController(UserService userService, IMapper mapper, UserDbContext userDbContext)
+    public AuthController(UserService userService, IMapper mapper, DatabaseContext databaseContext)
     {
         _userService = userService;
         _mapper = mapper;
-        _userDbContext = userDbContext;
+        _databaseContext = databaseContext;
     }
 
     [HttpPost("register")]
@@ -51,8 +51,8 @@ public class AuthController: ControllerBase
         }
 
         user.Token = _userService.CreateUserToken(user);
-        _userDbContext.Users.Update(user);
-        await _userDbContext.SaveChangesAsync();
+        _databaseContext.Users.Update(user);
+        await _databaseContext.SaveChangesAsync();
         var data = new Dictionary<string, string>()
         {
             {"id",user.ID.ToString()},
