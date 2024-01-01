@@ -33,11 +33,28 @@ public class ProductController:ControllerBase
             var product = _mapper.Map<Product>(productDto);
             product.Category = category;
             await _productService.CreateProduct(product);
-            return StatusCode(201, product);
+            return StatusCode(201, new Dictionary<string,dynamic>()
+            {
+                {"id",product.Id},
+                {"name",product.Name},
+                {"price",product.Price},
+                {"category",new Dictionary<string,dynamic>()
+                {
+                    {"id",product.CategoryId},
+                    {"title",product.Category.Title},
+                    {"description",product.Category.Description}
+                }}
+            });
         }
         catch (Exception e)
         {
             return StatusCode(500, "Error: " + e);
         }
+    }
+
+    [HttpGet("GetAllProducts")]
+    public async Task<List<ProductDto>> GetAllProducts()
+    {
+        return await _productService.GetAllProducts();
     }
 }
