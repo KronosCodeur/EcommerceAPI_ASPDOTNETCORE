@@ -16,7 +16,14 @@ public class ProductService : IProductRepository
 
     public async Task<bool> CreateProduct(Product product)
     {
-        await _databaseContext.AddAsync(product);
+        var categories = await _databaseContext.Categories.ToListAsync();
+        foreach (var category in categories)
+        {
+            var products = await _databaseContext.Products.Where(p=>p.Category==category).ToListAsync();
+            category.Products = products;
+            _databaseContext.Categories.Update(category);
+        }
+        await _databaseContext.Products.AddAsync(product);
         await _databaseContext.SaveChangesAsync();
         return true;
     }
@@ -25,6 +32,13 @@ public class ProductService : IProductRepository
     {
         List<Product> products = new List<Product>();
         products = await _databaseContext.Products.ToListAsync();
+        return products;
+    }
+
+    public async Task<List<Product>> FindByCategory(Category category)
+    {
+        var products = await _databaseContext.Products.Where(p=>p.Category==category).ToListAsync();
+
         return products;
     }
 
