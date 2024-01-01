@@ -12,12 +12,6 @@ public class CategoryController : ControllerBase
     private readonly CategoryService _categoryService;
     private readonly IMapper _mapper;
 
-    public CategoryController(CategoryService categoryService, IMapper mapper)
-    {
-        _categoryService = categoryService;
-        _mapper = mapper;
-    }
-
     [HttpGet("GetAllCategories")]
     public async Task<ActionResult<List<Category>>> GetAllCategories()
     {

@@ -55,7 +55,7 @@ public class AuthController: ControllerBase
         await _databaseContext.SaveChangesAsync();
         var data = new Dictionary<string, string>()
         {
-            {"id",user.ID.ToString()},
+            {"id",user.Id.ToString()},
             {"username",username},
             {"address",user.Address},
             {"email",user.Email},

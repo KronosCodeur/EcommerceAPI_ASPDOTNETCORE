@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Ecommerce_API.Data;
 using Ecommerce_API.Services;
 using Microsoft.EntityFrameworkCore;
@@ -6,7 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(j=>j.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles
+);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DatabaseContext>(opt =>

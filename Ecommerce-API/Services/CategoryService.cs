@@ -8,6 +8,7 @@ namespace Ecommerce_API.Services;
 public class CategoryService : ICategoryRepository
 {
     private readonly DatabaseContext _databaseContext;
+    private readonly ProductService _productService;
 
     public CategoryService(DatabaseContext databaseContext)
     {
