@@ -14,11 +14,11 @@ public class CategoryService : ICategoryRepository
         _databaseContext = databaseContext;
     }
 
-    public async Task<Category> CreateCategory(Category category)
+    public async Task<bool> CreateCategory(Category category)
     {
         await _databaseContext.Categories.AddAsync(category);
         await _databaseContext.SaveChangesAsync();
-        return category;
+        return true;
     }
 
     public async Task<List<Category>> GetAllCategories()
