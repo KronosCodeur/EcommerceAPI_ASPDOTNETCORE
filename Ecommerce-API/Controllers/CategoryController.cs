@@ -12,9 +12,10 @@ public class CategoryController : ControllerBase
     private readonly CategoryService _categoryService;
     private readonly IMapper _mapper;
 
-    public CategoryController(CategoryService categoryService)
+    public CategoryController(CategoryService categoryService, IMapper mapper)
     {
         _categoryService = categoryService;
+        _mapper = mapper;
     }
 
     [HttpGet("GetAllCategories")]
@@ -30,7 +31,7 @@ public class CategoryController : ControllerBase
     {
         try
         {
-            Category category = _mapper.Map<Category>(categoryDto);
+            var category = _mapper.Map<Category>(categoryDto);
             await _categoryService.CreateCategory(category);
             return StatusCode(201, category);
         }
