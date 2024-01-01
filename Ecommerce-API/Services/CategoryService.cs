@@ -26,4 +26,10 @@ public class CategoryService : ICategoryRepository
         var categories = await _databaseContext.Categories.ToListAsync();
         return categories;
     }
+
+    public async Task<Category?> GetCategoryById(int id)
+    {
+        var category = await _databaseContext.Categories.FirstOrDefaultAsync(c => c.Id == id);
+        return category;
+    }
 }
