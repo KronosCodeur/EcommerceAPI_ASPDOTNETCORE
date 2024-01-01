@@ -1,6 +1,7 @@
 using Ecommerce_API.Data;
 using Ecommerce_API.Models;
 using Ecommerce_API.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce_API.Services;
 
@@ -22,11 +23,13 @@ public class ProductService : IProductRepository
 
     public async Task<List<Product>> GetAllProducts()
     {
-        throw new NotImplementedException();
+        List<Product> products = new List<Product>();
+        products = await _databaseContext.Products.ToListAsync();
+        return products;
     }
 
-    public async Task<Product> ProductInfo(int id)
+    public async Task<Product?> ProductInfo(int id)
     {
-        throw new NotImplementedException();
+        return await _databaseContext.Products.FirstOrDefaultAsync(p=>p.Id==id);
     }
 }
