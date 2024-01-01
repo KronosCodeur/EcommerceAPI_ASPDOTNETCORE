@@ -9,9 +9,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<UserDbContext>(opt =>
+builder.Services.AddDbContext<DatabaseContext>(opt =>
     opt.UseNpgsql(builder.Configuration.GetConnectionString("ECommerceConnectionString")));
 builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<CategoryService>();
+builder.Services.AddScoped<ProductService>();
 builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
