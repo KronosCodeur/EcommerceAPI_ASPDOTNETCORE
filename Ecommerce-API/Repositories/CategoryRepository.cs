@@ -4,6 +4,6 @@ namespace Ecommerce_API.Repositories;
 
 public interface ICategoryRepository
 {
-    Task<Category> CreateCategory(Category category);
+    Task<bool> CreateCategory(Category category);
     Task<List<Category>> GetAllCategories();
 }
