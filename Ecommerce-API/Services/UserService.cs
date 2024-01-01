@@ -46,6 +46,7 @@ public class UserService : IUserRepository
             signingCredentials: creds
         );
         string jwt = new JwtSecurityTokenHandler().WriteToken(token);
+        user.Token = jwt;
 
         return jwt;
     }
