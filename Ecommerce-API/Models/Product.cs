@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using AutoMapper.Configuration.Annotations;
 
 namespace Ecommerce_API.Models;
@@ -11,6 +12,7 @@ public class Product
     public string Name { get; set; }
     [ForeignKey("CatId")]
     public int CategoryId { get; set;}
+    [JsonIgnore]
     public Category Category { get; set; }
     public double Price { get; set; }
 
