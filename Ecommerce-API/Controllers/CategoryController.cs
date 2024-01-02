@@ -12,12 +12,24 @@ public class CategoryController : ControllerBase
     private readonly CategoryService _categoryService;
     private readonly IMapper _mapper;
 
-    [HttpGet("GetAllCategories")]
-    public async Task<ActionResult<List<Category>>> GetAllCategories()
+    public CategoryController(CategoryService categoryService, IMapper mapper)
     {
-        List<Category> categories = new List<Category>();
-         categories = await _categoryService.GetAllCategories();
-        return Ok(categories);
+        _categoryService = categoryService;
+        _mapper = mapper;
+    }
+    [HttpGet("GetAllCategories")]
+    public async Task<IActionResult> GetAllCategories()
+    {
+        try
+        {
+            var categories = await _categoryService.GetAllCategories();
+            return Ok(categories);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, "Error: " + e);
+        }
     }
 
     [HttpPost("CreateCategory")]
@@ -26,6 +38,7 @@ public class CategoryController : ControllerBase
         try
         {
             var category = _mapper.Map<Category>(categoryDto);
+            category.Products = new List<Product>();
             await _categoryService.CreateCategory(category);
             return StatusCode(201, category);
         }
