@@ -25,14 +25,9 @@ public class ProductService : IProductRepository
         return true;
     }
 
-    public async Task<List<ProductDto>> GetAllProducts()
+    public async Task<List<Product>> GetAllProducts()
     {
-        List<ProductDto> products = new List<ProductDto>();
-        var datas = await _databaseContext.Products.ToListAsync();
-        foreach (var data in datas)
-        {
-            products.Add(_mapper.Map<ProductDto>(data));
-        }
+        List<Product> products = await _databaseContext.Products.ToListAsync();
         return products;
     }
 
