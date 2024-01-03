@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using AutoMapper;
 using Ecommerce_API.Data;
 using Ecommerce_API.DTO;
@@ -27,7 +28,7 @@ public class ProductService : IProductRepository
 
     public async Task<List<Product>> GetAllProducts()
     {
-        List<Product> products = await _databaseContext.Products.ToListAsync();
+        List<Product> products = await _databaseContext.Products.Include(product => product.Category).Select(product=>new Product{Id = product.Id, Name = product.Name,Price = product.Price}).ToListAsync();
         return products;
     }
 
