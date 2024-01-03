@@ -51,6 +51,17 @@ public class UserService : IUserRepository
         return jwt;
     }
 
+    public async Task<bool> IsTokenValid(string token)
+    {
+        var user = await _databaseContext.Users.FirstOrDefaultAsync(user1 => user1.Token == token);
+        if (user is null)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     private byte[] GenerateStrongKey(int keySizeBits)
     {
         using (var rng = RandomNumberGenerator.Create())
