@@ -24,7 +24,7 @@ public class CategoryService : ICategoryRepository
 
     public async Task<List<Category>> GetAllCategories()
     {
-        var categories = await _databaseContext.Categories.ToListAsync();
+        var categories = await _databaseContext.Categories.Include(category =>category.Products).ToListAsync();
         return categories;
     }
 

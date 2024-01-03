@@ -38,8 +38,8 @@ public class CategoryController : ControllerBase
         try
         {
             var category = _mapper.Map<Category>(categoryDto);
-            category.Products = new List<Product>();
             await _categoryService.CreateCategory(category);
+
             return StatusCode(201, category);
         }
         catch (Exception e)
